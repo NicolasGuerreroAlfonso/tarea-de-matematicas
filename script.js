@@ -28,8 +28,8 @@ function describirPendiente(b) {
 }
 
 function generarYClasificar() {
-    bActual = randomEntero(-10, 10);
-    cActual = randomEntero(-10, 10);
+    bActual = randomEntero(-3, 3);
+    cActual = randomEntero(-3, 3);
 
     document.getElementById("valor-b").textContent = bActual;
     document.getElementById("valor-c").textContent = cActual;
@@ -37,6 +37,7 @@ function generarYClasificar() {
     const expresion = formatearExpresion(bActual, cActual);
     document.getElementById("expresion-funcion").textContent = expresion;
 
+    const miniEstado = document.getElementById("mini-estado");
     const cajaLineal = document.getElementById("caja-lineal");
     const cajaAfin = document.getElementById("caja-afin");
     const contLineal = document.getElementById("contenido-lineal");
@@ -44,7 +45,41 @@ function generarYClasificar() {
     const badgeLineal = document.getElementById("badge-lineal");
     const badgeAfin = document.getElementById("badge-afin");
 
-    if (cActual === 0) {
+    if (bActual === 0 && cActual === 0) {
+        miniEstado.className = "mini-panel is-none";
+        miniEstado.innerHTML = `
+      <span><strong>No hay función:</strong> b = 0 y c = 0 (f(x) = 0).</span>
+      <span class="mini-badge">b = 0, c = 0</span>
+    `;
+
+        cajaLineal.classList.remove("active-lineal");
+        cajaAfin.classList.remove("active-afin");
+        badgeLineal.textContent = "Inactiva";
+        badgeAfin.textContent = "Inactiva";
+
+        contLineal.innerHTML = `<p class="empty-msg">No corresponde (no hay función).</p>`;
+        contAfin.innerHTML = `<p class="empty-msg">No corresponde (no hay función).</p>`;
+    }
+    else if (bActual === 0 && cActual !== 0) {
+        miniEstado.className = "mini-panel is-constante";
+        miniEstado.innerHTML = `
+      <span><strong>Función Constante:</strong> Recta horizontal en y = ${cActual}.</span>
+      <span class="mini-badge">b = 0, c ≠ 0</span>
+    `;
+
+        cajaLineal.classList.remove("active-lineal");
+        cajaAfin.classList.remove("active-afin");
+        badgeLineal.textContent = "Inactiva";
+        badgeAfin.textContent = "Inactiva";
+
+        contLineal.innerHTML = `<p class="empty-msg">No corresponde (b = 0: función constante).</p>`;
+        contAfin.innerHTML = `<p class="empty-msg">No corresponde (b = 0: función constante).</p>`;
+    }
+
+    else if (cActual === 0) {
+        miniEstado.className = "mini-panel hidden";
+        miniEstado.innerHTML = "";
+
         cajaLineal.classList.add("active-lineal");
         cajaAfin.classList.remove("active-afin");
 
@@ -60,7 +95,12 @@ function generarYClasificar() {
       </ul>
     `;
         contAfin.innerHTML = `<p class="empty-msg">No corresponde (el coeficiente c es igual a 0).</p>`;
-    } else {
+    }
+
+    else {
+        miniEstado.className = "mini-panel hidden";
+        miniEstado.innerHTML = "";
+
         cajaAfin.classList.add("active-afin");
         cajaLineal.classList.remove("active-lineal");
 
@@ -96,10 +136,25 @@ function graficarEnGeoGebra(b, c) {
         } else {
             ggbApi.evalCommand(`b = ${b}`);
             ggbApi.evalCommand(`c = ${c}`);
+        }
+
+        if (!ggbApi.exists("f")) {
             ggbApi.evalCommand(`f(x) = b * x + c`);
+        }
+
+        if (!ggbApi.exists("CorteY")) {
             ggbApi.evalCommand(`CorteY = (0, c)`);
         }
-        ggbApi.setColor("f", c === 0 ? 21 : 180, c === 0 ? 128 : 83, c === 0 ? 61 : 9);
+
+        if (b === 0 && c === 0) {
+            ggbApi.setColor("f", 71, 85, 105);
+        } else if (b === 0) {
+            ggbApi.setColor("f", 217, 119, 6);
+        } else if (c === 0) {
+            ggbApi.setColor("f", 13, 148, 136);
+        } else {
+            ggbApi.setColor("f", 225, 29, 72);
+        }
         ggbApi.setLineThickness("f", 4);
     } catch (err) {
         console.warn("Error al actualizar el gráfico en GeoGebra:", err);
@@ -116,7 +171,6 @@ function cargarArchivoGGBEnVisor(blob) {
     reader.readAsDataURL(blob);
 }
 
-
 async function verificarArchivoEnGitHubPages() {
     const statusText = document.getElementById("repo-status-text");
     const btnCargarRepo = document.getElementById("btn-cargar-repo");
@@ -131,8 +185,41 @@ async function verificarArchivoEnGitHubPages() {
             statusText.innerHTML = `No se encontró <code>./funcion.ggb</code> en la raíz del repositorio (puedes cargarlo manualmente arriba).`;
         }
     } catch (error) {
-        statusText.innerHTML = `Modo local: al subir los archivos  se conectarán solos.`;
+        statusText.innerHTML = `Modo local: al subir <code>index.html</code>, <code>style.css</code>, <code>script.js</code> y <code>funcion.ggb</code> a GitHub Pages se conectarán solos.`;
     }
+}
+
+function copiarTexto(texto, boton) {
+    const confirmarCopia = () => {
+        boton.textContent = "Copiada";
+        setTimeout(() => {
+            boton.textContent = "Copiar función";
+        }, 1500);
+    };
+
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(texto).then(confirmarCopia).catch(() => {
+            copiarFallback(texto, confirmarCopia);
+        });
+    } else {
+        copiarFallback(texto, confirmarCopia);
+    }
+}
+
+function copiarFallback(texto, callback) {
+    const area = document.createElement("textarea");
+    area.value = texto;
+    area.style.position = "fixed";
+    area.style.opacity = "0";
+    document.body.appendChild(area);
+    area.select();
+    try {
+        document.execCommand("copy");
+        callback();
+    } catch (err) {
+        console.warn("No se pudo copiar el texto:", err);
+    }
+    document.body.removeChild(area);
 }
 
 window.addEventListener("load", () => {
@@ -155,7 +242,7 @@ window.addEventListener("load", () => {
         applet.inject("ggb-container");
     } else {
         document.getElementById("ggb-container").innerHTML =
-            "<p style='color:#0f172a;padding:20px;'>No se pudo cargar el visor embebido de GeoGebra. Revisa tu conexión a internet o usa el botón superior.</p>";
+            "<p style='color:#18181b;padding:20px;'>No se pudo cargar el visor embebido de GeoGebra. Revisa tu conexión a internet o usa el botón superior.</p>";
         generarYClasificar();
     }
 
@@ -164,12 +251,9 @@ window.addEventListener("load", () => {
 
 document.getElementById("btn-generar").addEventListener("click", generarYClasificar);
 
-document.getElementById("btn-copiar").addEventListener("click", () => {
+document.getElementById("btn-copiar").addEventListener("click", (event) => {
     const texto = document.getElementById("expresion-funcion").textContent;
-    navigator.clipboard.writeText(texto);
-    const btn = document.getElementById("btn-copiar");
-    btn.textContent = "Copiada";
-    setTimeout(() => (btn.textContent = "Copiar función"), 1500);
+    copiarTexto(texto, event.currentTarget);
 });
 
 document.getElementById("input-ggb").addEventListener("change", (event) => {
