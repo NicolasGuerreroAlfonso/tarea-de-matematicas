@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clasificador de Funciones — Lineal y Afín</title>
+  <link rel="stylesheet" href="./style.css" />
+  <script src="https://www.geogebra.org/apps/deployggb.js"></script>
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <span class="tag">Matemáticas &amp; Programación · Funciones Algebraicas</span>
+      <h1>Clasificador de Funciones</h1>
+      <p class="subtitle">Análisis Matemático e Interactivo: Función Lineal y Función Afín</p>
+    </header>
+
+    <section class="panel">
+      <div class="coeff-row">
+        <div class="coeff-box">
+          <span>Coeficiente de pendiente (b):</span>
+          <span class="coeff-value" id="valor-b">0</span>
+        </div>
+        <div class="coeff-box">
+          <span>Coeficiente de posición (c):</span>
+          <span class="coeff-value" id="valor-c">0</span>
+        </div>
+      </div>
+
+      <div class="formula-display">
+        <span>Función de primer grado generada: f(x) = bx + c</span>
+        <strong id="expresion-funcion">f(x) = 0</strong>
+      </div>
+
+      <div class="btn-group">
+        <button type="button" class="btn-primary" id="btn-generar">
+          Generar / Cambiar
+        </button>
+        <button type="button" class="btn-secondary" id="btn-copiar">
+          Copiar función
+        </button>
+      </div>
+    </section>
+
+    <section class="class-box" id="caja-lineal">
+      <div class="class-header">
+        <span class="class-title">FUNCIÓN LINEAL (F.L.)</span>
+        <span class="status-badge" id="badge-lineal">Condición: c = 0</span>
+      </div>
+      <div id="contenido-lineal">
+        <p class="empty-msg">Presiona "Generar / Cambiar" para evaluar si c = 0.</p>
+      </div>
+    </section>
+
+    <section class="class-box" id="caja-afin">
+      <div class="class-header">
+        <span class="class-title">FUNCIÓN AFÍN (F.A.)</span>
+        <span class="status-badge" id="badge-afin">Condición: c ≠ 0</span>
+      </div>
+      <div id="contenido-afin">
+        <p class="empty-msg">Presiona "Generar / Cambiar" para evaluar si c ≠ 0.</p>
+      </div>
+    </section>
+    <section class="panel geogebra-section">
+      <h2>Modelación Gráfica en GeoGebra &amp;</h2>
+      <p>
+        Abre GeoGebra Clásico para graficar la función generada o utiliza el archivo
+      </p>
+
+      <div class="ggb-actions">
+        <a href="https://www.geogebra.org/classic" target="_blank" rel="noopener noreferrer" class="btn-link btn-ggb">
+          Abrir GeoGebra Clásico (geogebra.org/classic)
+        </a>
+        <a href="./funcion.ggb" download="funcion.ggb" class="btn-link btn-secondary" id="btn-descargar-repo">
+          Descargar funcion.ggb
+        </a>
+      </div>
+
+      <div class="upload-box">
+        <label for="input-ggb">Subir / Cargar archivo .ggb para visualizarlo en la página:</label>
+        <input type="file" id="input-ggb" accept=".ggb" />
+
+        <div class="repo-status" id="repo-status">
+          <span id="repo-status-text">Verificando conexión con <code>./funcion.ggb</code></span>
+          <button type="button" class="btn-secondary btn-small" id="btn-cargar-repo">
+            Cargar funcion.ggb en el visor
+          </button>
+        </div>
+      </div>
+
+      <div id="ggb-container"></div>
+    </section>
+  </div>
+
+  <script src="./script.js"></script>
+</body>
+
+</html>

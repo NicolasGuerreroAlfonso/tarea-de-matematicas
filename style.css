@@ -1,0 +1,337 @@
+:root {
+    --bg: #f8fafc;
+    --card: #ffffff;
+    --card-muted: #f1f5f9;
+    --border: #cbd5e1;
+    --text: #0f172a;
+    --text-muted: #475569;
+    --primary: #0284c7;
+    --primary-hover: #0369a1;
+    --lineal: #15803d;
+    --lineal-bg: #f0fdf4;
+    --afin: #b45309;
+    --afin-bg: #fffbeb;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+    padding: 24px 16px 48px;
+}
+
+.container {
+    max-width: 760px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+header {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 20px;
+}
+
+.tag {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--primary);
+    background: #e0f2fe;
+    padding: 3px 8px;
+    border-radius: 4px;
+    margin-bottom: 8px;
+}
+
+h1 {
+    font-size: 1.55rem;
+    margin-bottom: 4px;
+}
+
+.subtitle {
+    color: var(--text-muted);
+    font-size: 0.92rem;
+}
+
+.panel {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 20px;
+}
+
+.coeff-row {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.coeff-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 10px 14px;
+    font-size: 1.05rem;
+    font-weight: 600;
+}
+
+.coeff-value {
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 1.25rem;
+    color: var(--primary);
+    background: #e0f2fe;
+    padding: 2px 12px;
+    border-radius: 4px;
+    min-width: 56px;
+    text-align: center;
+}
+
+.formula-display {
+    text-align: center;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 12px;
+    margin-bottom: 16px;
+}
+
+.formula-display span {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+}
+
+.formula-display strong {
+    font-size: 1.4rem;
+    font-family: 'Consolas', 'Courier New', monospace;
+    color: var(--text);
+}
+
+.btn-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+button,
+.btn-link {
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    padding: 10px 16px;
+    font-size: 0.92rem;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: #ffffff;
+    flex: 1;
+    min-width: 180px;
+}
+
+.btn-primary:hover {
+    background: var(--primary-hover);
+}
+
+.btn-secondary {
+    background: var(--card);
+    color: var(--text);
+    border-color: var(--border);
+}
+
+.btn-secondary:hover {
+    background: var(--card-muted);
+}
+
+.btn-small {
+    display: none;
+    padding: 6px 10px;
+    font-size: 0.82rem;
+}
+
+.class-box {
+    background: var(--card-muted);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 18px;
+    opacity: 0.65;
+}
+
+.class-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.class-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+}
+
+.status-badge {
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 4px;
+    background: var(--card);
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+}
+
+.class-box.active-lineal {
+    opacity: 1;
+    background: var(--card);
+    border: 2px solid var(--lineal);
+}
+
+.class-box.active-lineal .class-title {
+    color: var(--lineal);
+}
+
+.class-box.active-lineal .status-badge {
+    background: var(--lineal-bg);
+    color: var(--lineal);
+    border-color: var(--lineal);
+}
+
+.class-box.active-afin {
+    opacity: 1;
+    background: var(--card);
+    border: 2px solid var(--afin);
+}
+
+.class-box.active-afin .class-title {
+    color: var(--afin);
+}
+
+.class-box.active-afin .status-badge {
+    background: var(--afin-bg);
+    color: var(--afin);
+    border-color: var(--afin);
+}
+
+.props-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border);
+}
+
+.props-list li {
+    padding-left: 16px;
+    position: relative;
+    font-size: 0.92rem;
+}
+
+.props-list li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--text-muted);
+    font-weight: bold;
+}
+
+.empty-msg {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+}
+
+/* Sección GeoGebra */
+.geogebra-section h2 {
+    font-size: 1.15rem;
+    margin-bottom: 6px;
+}
+
+.geogebra-section p {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+}
+
+.ggb-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 14px;
+}
+
+.btn-ggb {
+    background: #334155;
+    color: #ffffff;
+}
+
+.btn-ggb:hover {
+    background: #1e293b;
+}
+
+.upload-box {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 14px;
+    margin-bottom: 14px;
+}
+
+.upload-box label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+}
+
+input[type="file"] {
+    width: 100%;
+    color: var(--text-muted);
+    font-size: 0.88rem;
+}
+
+.repo-status {
+    margin-top: 10px;
+    padding: 8px 10px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+#ggb-container {
+    width: 100%;
+    min-height: 420px;
+    background: #ffffff;
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+}
