@@ -1,13 +1,23 @@
+/* ============================================================
+   CLASIFICADOR DE FUNCIONES — Hoja de estilos
+   Paleta y superficies base en :root / reglas agrupadas.
+   ============================================================ */
+
 :root {
+    /* Superficies y texto */
     --bg: #f4f4f5;
     --card: #ffffff;
     --card-muted: #e4e4e7;
     --border: #d4d4d8;
     --text: #18181b;
     --text-muted: #52525b;
-    --primary: #4f46e5;
-    --primary-hover: #4338ca;
+
+    /* Marca */
+    --primary: #cd46e5;
+    --primary-hover: #ec00e8;
     --primary-soft: #eef2ff;
+
+    /* Colores por tipo de función (par: color / fondo suave) */
     --lineal: #0d9488;
     --lineal-bg: #f0fdfa;
     --afin: #e11d48;
@@ -18,10 +28,12 @@
     --sin-funcion-bg: #f1f5f9;
 }
 
+/* Reset + tipografía + radio común a todo el documento */
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    border-radius: 4px;
     font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
 }
 
@@ -40,14 +52,16 @@ body {
     gap: 16px;
 }
 
-/* Encabezado */
-header {
+/* ============ SUPERFICIE DE TARJETA ============
+   Compartida por encabezado y paneles. */
+header,
+.panel {
     background: var(--card);
     border: 1px solid var(--border);
-    border-radius: 4px;
     padding: 20px;
 }
 
+/* ============ ENCABEZADO ============ */
 .tag {
     display: inline-block;
     font-size: 0.75rem;
@@ -56,7 +70,6 @@ header {
     color: var(--primary);
     background: var(--primary-soft);
     padding: 3px 8px;
-    border-radius: 4px;
     margin-bottom: 8px;
 }
 
@@ -70,13 +83,7 @@ h1 {
     font-size: 0.92rem;
 }
 
-.panel {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 20px;
-}
-
+/* ============ PANEL DE COEFICIENTES ============ */
 .coeff-row {
     display: flex;
     flex-direction: column;
@@ -84,13 +91,17 @@ h1 {
     margin-bottom: 16px;
 }
 
+/* Cajas de coeficiente y visor de fórmula comparten superficie */
+.coeff-box,
+.formula-display {
+    background: var(--bg);
+    border: 1px solid var(--border);
+}
+
 .coeff-box {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: 4px;
     padding: 10px 14px;
     font-size: 1.05rem;
     font-weight: 600;
@@ -102,16 +113,12 @@ h1 {
     color: var(--primary);
     background: var(--primary-soft);
     padding: 2px 12px;
-    border-radius: 4px;
     min-width: 56px;
     text-align: center;
 }
 
 .formula-display {
     text-align: center;
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: 4px;
     padding: 12px;
     margin-bottom: 16px;
 }
@@ -129,6 +136,7 @@ h1 {
     color: var(--text);
 }
 
+/* ============ BOTONES ============ */
 .btn-group {
     display: flex;
     flex-wrap: wrap;
@@ -139,7 +147,6 @@ button,
 .btn-link {
     cursor: pointer;
     border: 1px solid transparent;
-    border-radius: 4px;
     padding: 10px 16px;
     font-size: 0.92rem;
     font-weight: 600;
@@ -171,14 +178,16 @@ button,
     background: var(--bg);
 }
 
+/* Botón pequeño, oculto hasta que el repo responda (lo muestra el JS) */
 .btn-small {
     display: none;
     padding: 6px 10px;
     font-size: 0.82rem;
 }
 
+/* ============ AVISO DE ESTADO ============
+   Cada variante solo define --state / --state-bg. */
 .mini-panel {
-    border-radius: 4px;
     padding: 12px 16px;
     font-size: 0.94rem;
     display: flex;
@@ -186,6 +195,9 @@ button,
     justify-content: space-between;
     gap: 10px;
     flex-wrap: wrap;
+    border: 2px solid var(--state);
+    background: var(--state-bg);
+    color: var(--state-text);
 }
 
 .mini-panel.hidden {
@@ -193,30 +205,30 @@ button,
 }
 
 .mini-panel.is-constante {
-    background: var(--constante-bg);
-    border: 2px solid var(--constante);
-    color: #92400e;
+    --state: var(--constante);
+    --state-bg: var(--constante-bg);
+    --state-text: #92400e;
 }
 
 .mini-panel.is-none {
-    background: var(--sin-funcion-bg);
-    border: 2px solid var(--sin-funcion);
-    color: #1e293b;
+    --state: var(--sin-funcion);
+    --state-bg: var(--sin-funcion-bg);
+    --state-text: #1e293b;
 }
 
 .mini-badge {
     font-size: 0.78rem;
     font-weight: 700;
     padding: 2px 8px;
-    border-radius: 4px;
     background: var(--card);
     border: 1px solid currentColor;
 }
 
+/* ============ CAJAS DE CLASIFICACIÓN ============
+   Apagadas por defecto; las clases .active-* las encienden. */
 .class-box {
     background: var(--card-muted);
     border: 1px solid var(--border);
-    border-radius: 4px;
     padding: 18px;
     opacity: 0.65;
 }
@@ -239,44 +251,42 @@ button,
     font-size: 0.78rem;
     font-weight: 600;
     padding: 3px 8px;
-    border-radius: 4px;
     background: var(--card);
     color: var(--text-muted);
     border: 1px solid var(--border);
 }
 
+/* Estado activo: mismo patrón para lineal y afín */
 .class-box.active-lineal {
-    opacity: 1;
-    background: var(--card);
-    border: 2px solid var(--lineal);
-}
-
-.class-box.active-lineal .class-title {
-    color: var(--lineal);
-}
-
-.class-box.active-lineal .status-badge {
-    background: var(--lineal-bg);
-    color: var(--lineal);
-    border-color: var(--lineal);
+    --state: var(--lineal);
+    --state-bg: var(--lineal-bg);
 }
 
 .class-box.active-afin {
+    --state: var(--afin);
+    --state-bg: var(--afin-bg);
+}
+
+.class-box.active-lineal,
+.class-box.active-afin {
     opacity: 1;
     background: var(--card);
-    border: 2px solid var(--afin);
+    border: 2px solid var(--state);
 }
 
+.class-box.active-lineal .class-title,
 .class-box.active-afin .class-title {
-    color: var(--afin);
+    color: var(--state);
 }
 
+.class-box.active-lineal .status-badge,
 .class-box.active-afin .status-badge {
-    background: var(--afin-bg);
-    color: var(--afin);
-    border-color: var(--afin);
+    background: var(--state-bg);
+    color: var(--state);
+    border-color: var(--state);
 }
 
+/* ============ LISTA DE PROPIEDADES ============ */
 .props-list {
     list-style: none;
     display: flex;
@@ -306,6 +316,7 @@ button,
     color: var(--text-muted);
 }
 
+/* ============ SECCIÓN GEOGEBRA ============ */
 .geogebra-section h2 {
     font-size: 1.15rem;
     margin-bottom: 6px;
@@ -333,10 +344,10 @@ button,
     background: #18181b;
 }
 
+/* Caja de subida de archivo */
 .upload-box {
     background: var(--bg);
     border: 1px solid var(--border);
-    border-radius: 4px;
     padding: 14px;
     margin-bottom: 14px;
 }
@@ -357,7 +368,6 @@ input[type="file"] {
 .repo-status {
     margin-top: 10px;
     padding: 8px 10px;
-    border-radius: 4px;
     font-size: 0.85rem;
     background: var(--card);
     border: 1px solid var(--border);
@@ -368,11 +378,11 @@ input[type="file"] {
     gap: 8px;
 }
 
+/* Contenedor del applet */
 #ggb-container {
     width: 100%;
     min-height: 420px;
     background: #ffffff;
-    border-radius: 4px;
     overflow: hidden;
     border: 1px solid var(--border);
 }

@@ -6,18 +6,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Clasificador de Funciones — Lineal y Afín</title>
   <link rel="stylesheet" href="./style.css" />
+  <!-- API de GeoGebra: necesaria para crear el visor gráfico -->
   <script src="https://www.geogebra.org/apps/deployggb.js"></script>
 </head>
 
 <body>
   <div class="container">
+
+    <!-- ============ ENCABEZADO ============ -->
     <header>
       <span class="tag">Matemáticas &amp; Programación · Funciones Algebraicas</span>
       <h1>Clasificador de Funciones</h1>
       <p class="subtitle">Análisis Matemático e Interactivo: Función Lineal y Función Afín</p>
     </header>
 
+    <!-- ============ PANEL DE CONTROL ============
+         Muestra los coeficientes b y c de f(x) = bx + c
+         y los botones para generar y copiar la función. -->
     <section class="panel">
+
+      <!-- Coeficientes actuales (los actualiza script.js) -->
       <div class="coeff-row">
         <div class="coeff-box">
           <span>Coeficiente de pendiente (b):</span>
@@ -29,23 +37,24 @@
         </div>
       </div>
 
+      <!-- Función de primer grado generada -->
       <div class="formula-display">
         <span>Función de primer grado generada: f(x) = bx + c</span>
         <strong id="expresion-funcion">f(x) = 0</strong>
       </div>
 
+      <!-- Acciones: generar nueva función / copiarla al portapapeles -->
       <div class="btn-group">
-        <button type="button" class="btn-primary" id="btn-generar">
-          Generar / Cambiar
-        </button>
-        <button type="button" class="btn-secondary" id="btn-copiar">
-          Copiar función
-        </button>
+        <button type="button" class="btn-primary" id="btn-generar">Generar / Cambiar</button>
+        <button type="button" class="btn-secondary" id="btn-copiar">Copiar función</button>
       </div>
     </section>
 
+    <!-- Mensajes breves de estado  -->
     <section class="mini-panel hidden" id="mini-estado" aria-live="polite"></section>
 
+    <!-- ============ RESULTADO: FUNCIÓN LINEAL ============
+         Se marca cuando la condición es c = 0. -->
     <section class="class-box" id="caja-lineal">
       <div class="class-header">
         <span class="class-title">FUNCIÓN LINEAL (F.L.)</span>
@@ -56,6 +65,8 @@
       </div>
     </section>
 
+    <!-- ============ RESULTADO: FUNCIÓN AFÍN ============
+         Se marca cuando la condición es c ≠ 0. -->
     <section class="class-box" id="caja-afin">
       <div class="class-header">
         <span class="class-title">FUNCIÓN AFÍN (F.A.)</span>
@@ -66,36 +77,43 @@
       </div>
     </section>
 
+    <!-- ============ GEOGEBRA ============
+         Enlaces externos, carga del archivo .ggb del repositorio
+         y contenedor donde se dibuja el visor. -->
     <section class="panel geogebra-section">
       <h2>Modelación Gráfica en GeoGebra &amp; GitHub Pages</h2>
       <p>
-        Abre GeoGebra Clásico para graficar la función generada, o utiliza el archivo
-        <strong>funcion.ggb</strong> conectado desde tu repositorio en GitHub Pages.
+        Abre GeoGebra Clásico para graficar la función, o carga
+        <strong>funcion.ggb</strong> desde tu repositorio en GitHub Pages.
       </p>
 
       <div class="ggb-actions">
         <a href="https://www.geogebra.org/classic" target="_blank" rel="noopener noreferrer" class="btn-link btn-ggb">
-          Abrir GeoGebra Clásico (geogebra.org/classic)
+          Abrir GeoGebra Clásico
         </a>
         <a href="./funcion.ggb" download="funcion.ggb" class="btn-link btn-secondary" id="btn-descargar-repo">
           Descargar funcion.ggb
         </a>
       </div>
 
+      <!-- Subida manual de un archivo .ggb local -->
       <div class="upload-box">
-        <label for="input-ggb">Subir / Cargar archivo .ggb para visualizarlo en la página:</label>
+        <label for="input-ggb">Subir archivo .ggb para visualizarlo:</label>
         <input type="file" id="input-ggb" accept=".ggb" />
 
+        <!-- Estado de la carga desde el repositorio -->
         <div class="repo-status" id="repo-status">
-          <span id="repo-status-text">Verificando conexión con <code>./funcion.ggb</code> en GitHub Pages...</span>
+          <span id="repo-status-text">Verificando <code>./funcion.ggb</code> en GitHub Pages...</span>
           <button type="button" class="btn-secondary btn-small" id="btn-cargar-repo">
             Cargar funcion.ggb en el visor
           </button>
         </div>
       </div>
 
+      <!-- Aquí se inserta el nav de GeoGebra -->
       <div id="ggb-container"></div>
     </section>
+
   </div>
 
   <script src="./script.js"></script>
